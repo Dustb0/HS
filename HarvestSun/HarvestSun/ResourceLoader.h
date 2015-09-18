@@ -21,7 +21,7 @@ public:
 
 	}
 
-	void Load(Identifier resID, const std::string& filename)
+	void load(Identifier resID, const std::string& filename)
 	{
 		std::unique_ptr<Resource> resource(new Resource());
 		resource->loadFromFile(filename);
@@ -30,7 +30,7 @@ public:
 	}
 
 	template <typename Parameter>
-	void Load(Identifier resID, const std::string& filename, const Parameter& secondParam)
+	void load(Identifier resID, const std::string& filename, const Parameter& secondParam)
 	{
 		std::unique_ptr<Resource> resource(new Resource());
 		resource->loadFromFile(filename, secondParam);
@@ -38,8 +38,13 @@ public:
 		m_resources.insert(std::make_pair(resID, std::move(resource)));
 	}
 
-	Resource& Get(Identifier resID)	{		auto res = m_resources.find(resID);
-		return *res->second;	}	const Resource& Get(Identifier resID) const
+	Resource& get(Identifier resID)
+	{
+		auto res = m_resources.find(resID);
+		return *res->second;
+	}
+
+	const Resource& get(Identifier resID) const
 	{
 		auto res = m_resources.find(resID);
 		return *res->second;

@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "Player.h"
 #include "ResourceLoader.h"
 
 class Game
@@ -11,18 +11,16 @@ public:
 	void Run();
 
 private:
-	void Update(float deltaTime);
-	void FixedUpdate(float deltaTime);
-	void Render();
-	void ProcessEvents();
-	void HandlePlayerInput(sf::Keyboard::Key key, bool pressed);
+	void update(float deltaTime);
+	void fixedUpdate(float deltaTime);
+	void render();
+	void processEvents();
+	void handlePlayerInput(sf::Keyboard::Key key, bool pressed);
 
 	sf::RenderWindow m_window;
-	sf::Texture m_playerTex;
-	sf::Sprite m_player;
+	Player m_player;
 	ResourceLoader<sf::Texture, Textures::ID> m_texLoader;
 
-	float m_playerSpeed = 100.0f;
 	bool m_playerMovingUp = false;
 	bool m_playerMovingDown = false;
 	bool m_playerMovingRight = false;
