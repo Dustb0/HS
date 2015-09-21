@@ -105,6 +105,7 @@ void Game::fixedUpdate(float deltaTime)
 	if (m_playerMovingRight) mov.x += 1.0f;
 
 	m_player.move(mov, deltaTime); 
+	m_player.fixedUpdate(deltaTime);
 }
 
 void Game::render()
