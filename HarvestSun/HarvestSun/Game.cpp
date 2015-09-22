@@ -14,11 +14,34 @@ void Game::Run()
 	// Initialize window
 	m_window.setVerticalSyncEnabled(true);
 
+	// Get view reference
+	m_view = m_window.getView();
+
 	// Load resources
 	m_texLoader.load(Textures::Jack, "Data/Textures/Hero.png");
+	m_texLoader.load(Textures::TestMap, "Data/Textures/Map.png");
 	
 	// Assign texture to sprite
 	m_player.setTexture(m_texLoader.get(Textures::Jack));
+
+	// Assign texture to map
+	m_map.setTexture(m_texLoader.get(Textures::TestMap));
+
+	// Load level data
+	const int level[] =
+	{
+		0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+		0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0,
+		1, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1,
+		0, 1, 0, 0, 2, 0, 3, 3, 3, 0, 1, 1, 1, 0, 0, 0, 3, 0,
+		0, 1, 1, 0, 0, 3, 3, 0, 0, 0, 1, 1, 1, 2, 0, 0, 0, 0,
+		0, 0, 1, 0, 0, 0, 2, 2, 0, 0, 1, 1, 1, 1, 2, 0, 0, 0,
+		2, 0, 1, 0, 0, 0, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1, 2, 2,
+		0, 0, 1, 0, 0, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
+		0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 2, 0, 0, 0, 0,
+		0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0,
+	};
+	m_map.loadMapData(level, 18, 10);
 
 	sf::Clock clock;
 	float secsSinceLastUpdate = 0;
@@ -106,6 +129,9 @@ void Game::fixedUpdate(float deltaTime)
 
 	m_player.move(mov, deltaTime); 
 	m_player.fixedUpdate(deltaTime);
+
+	//m_view.move(0.0f, 10.0f * deltaTime);
+	m_window.setView(m_view);
 }
 
 void Game::render()
@@ -114,6 +140,7 @@ void Game::render()
 	m_window.clear(sf::Color::Black);
 
 	// Draw stuff
+	m_window.draw(m_map);
 	m_window.draw(m_player);
 
 	// Display

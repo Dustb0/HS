@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "ResourceLoader.h"
+#include "Tilemap.h"
 
 class Game
 {
@@ -18,8 +19,10 @@ private:
 	void handlePlayerInput(sf::Keyboard::Key key, bool pressed);
 
 	sf::RenderWindow m_window;
+	sf::View m_view;
 	Player m_player;
 	ResourceLoader<sf::Texture, Textures::ID> m_texLoader;
+	Tilemap m_map;
 
 	bool m_playerMovingUp = false;
 	bool m_playerMovingDown = false;

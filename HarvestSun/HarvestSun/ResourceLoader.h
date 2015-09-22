@@ -4,7 +4,7 @@
 
 namespace Textures
 {
-	enum ID {Jack};
+	enum ID {Jack, TestMap};
 }
 
 template <typename Resource, typename Identifier>

@@ -81,6 +81,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="Tilemap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
