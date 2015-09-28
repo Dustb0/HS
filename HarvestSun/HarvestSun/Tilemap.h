@@ -53,19 +53,30 @@ public:
 				quad[3].texCoords = sf::Vector2f(tu * TILESIZE, (tv + 1) * TILESIZE);
 			}
 		}
+
+		// Load shader
+		m_shader.loadFromFile("Data/Shaders/Tilemap.frag", sf::Shader::Fragment);
+	}
+
+	void update()
+	{
+		m_shader.setParameter("texture", m_texture);
 	}
 
 private:
 	sf::VertexArray m_vertices;
 	sf::Texture m_texture;
+	sf::Shader m_shader;
+
 	const int TILESIZE = 32;
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		// apply the tileset texture
 		states.texture = &m_texture;
+		states.shader = &m_shader;
 
-		// draw the vertex array
+		// Draw the vertex array
 		target.draw(m_vertices, states);
 	}
 };

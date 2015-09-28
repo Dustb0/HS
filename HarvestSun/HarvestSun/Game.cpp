@@ -25,23 +25,55 @@ void Game::Run()
 	m_player.setTexture(m_texLoader.get(Textures::Jack));
 
 	// Assign texture to map
-	m_map.setTexture(m_texLoader.get(Textures::TestMap));
+	m_mapLayerGround.setTexture(m_texLoader.get(Textures::TestMap));
+	m_mapLayerMiddle.setTexture(m_texLoader.get(Textures::TestMap));
+	m_mapLayerAbove.setTexture(m_texLoader.get(Textures::TestMap));
 
 	// Load level data
 	const int level[] =
 	{
-		0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-		0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0,
-		1, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1,
-		0, 1, 0, 0, 2, 0, 3, 3, 3, 0, 1, 1, 1, 0, 0, 0, 3, 0,
-		0, 1, 1, 0, 0, 3, 3, 0, 0, 0, 1, 1, 1, 2, 0, 0, 0, 0,
-		0, 0, 1, 0, 0, 0, 2, 2, 0, 0, 1, 1, 1, 1, 2, 0, 0, 0,
-		2, 0, 1, 0, 0, 0, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1, 2, 2,
-		0, 0, 1, 0, 0, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
-		0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 2, 0, 0, 0, 0,
-		0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0,
+		0, 0, 0, 0, 2, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 3, 0,
+		0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0,
+		2, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2,
+		0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0,
 	};
-	m_map.loadMapData(level, 18, 10);
+	m_mapLayerGround.loadMapData(level, 18, 10);
+
+	const int level2[] =
+	{
+		5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5,
+		5, 1, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+		1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1,
+		5, 1, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 5, 5, 5, 5, 5,
+		5, 1, 1, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 5, 5, 5, 5, 5,
+		5, 5, 1, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 5, 5, 5, 5,
+		5, 5, 1, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 1, 1, 5, 5,
+		5, 5, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 5, 5,
+		5, 1, 1, 5, 5, 1, 5, 5, 5, 5, 1, 1, 1, 5, 5, 5, 5, 5,
+		5, 1, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+	};
+	m_mapLayerMiddle.loadMapData(level2, 18, 10);
+
+	const int level3[] =
+	{
+		1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 5,
+	};
+	m_mapLayerAbove.loadMapData(level3, 18, 10);
 
 	sf::Clock clock;
 	float secsSinceLastUpdate = 0;
@@ -114,7 +146,7 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool pressed)
 
 void Game::update(float deltaTime)
 {
-	
+	m_mapLayerGround.update();
 }
 
 void Game::fixedUpdate(float deltaTime)
@@ -140,8 +172,10 @@ void Game::render()
 	m_window.clear(sf::Color::Black);
 
 	// Draw stuff
-	m_window.draw(m_map);
+	m_window.draw(m_mapLayerGround);
+	m_window.draw(m_mapLayerMiddle);
 	m_window.draw(m_player);
+	m_window.draw(m_mapLayerAbove);
 
 	// Display
 	m_window.display();

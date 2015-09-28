@@ -22,7 +22,9 @@ private:
 	sf::View m_view;
 	Player m_player;
 	ResourceLoader<sf::Texture, Textures::ID> m_texLoader;
-	Tilemap m_map;
+	Tilemap m_mapLayerGround;
+	Tilemap m_mapLayerMiddle;
+	Tilemap m_mapLayerAbove;
 
 	bool m_playerMovingUp = false;
 	bool m_playerMovingDown = false;
