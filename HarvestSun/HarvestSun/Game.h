@@ -17,6 +17,8 @@ private:
 	void render();
 	void processEvents();
 	void handlePlayerInput(sf::Keyboard::Key key, bool pressed);
+	void loadMap(int mapID);
+	Tilemap& getLayer(int layer);
 
 	sf::RenderWindow m_window;
 	sf::View m_view;

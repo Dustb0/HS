@@ -1,5 +1,7 @@
 #include "Game.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 Game::Game() : m_window(sf::VideoMode(800, 600), "Harvest Sun"), m_player(), m_texLoader()
 {
@@ -20,60 +22,11 @@ void Game::Run()
 	// Load resources
 	m_texLoader.load(Textures::Jack, "Data/Textures/Hero.png");
 	m_texLoader.load(Textures::TestMap, "Data/Textures/Map.png");
-	
+
+	loadMap(1);
+
 	// Assign texture to sprite
 	m_player.setTexture(m_texLoader.get(Textures::Jack));
-
-	// Assign texture to map
-	m_mapLayerGround.setTexture(m_texLoader.get(Textures::TestMap));
-	m_mapLayerMiddle.setTexture(m_texLoader.get(Textures::TestMap));
-	m_mapLayerAbove.setTexture(m_texLoader.get(Textures::TestMap));
-
-	// Load level data
-	const int level[] =
-	{
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0,
-		0, 0, 0, 0, 2, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 3, 0,
-		0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0,
-		2, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2,
-		0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0,
-	};
-	m_mapLayerGround.loadMapData(level, 18, 10);
-
-	const int level2[] =
-	{
-		5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5,
-		5, 1, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-		1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1,
-		5, 1, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 5, 5, 5, 5, 5,
-		5, 1, 1, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 5, 5, 5, 5, 5,
-		5, 5, 1, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 5, 5, 5, 5,
-		5, 5, 1, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 1, 1, 5, 5,
-		5, 5, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 5, 5,
-		5, 1, 1, 5, 5, 1, 5, 5, 5, 5, 1, 1, 1, 5, 5, 5, 5, 5,
-		5, 1, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-	};
-	m_mapLayerMiddle.loadMapData(level2, 18, 10);
-
-	const int level3[] =
-	{
-		1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-		5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 5,
-	};
-	m_mapLayerAbove.loadMapData(level3, 18, 10);
 
 	sf::Clock clock;
 	float secsSinceLastUpdate = 0;
@@ -97,6 +50,88 @@ void Game::Run()
 		}
 
 		render();
+	}
+}
+
+void Game::loadMap(int mapID)
+{
+	// Put together filename
+	std::ostringstream oss;
+	oss << "Data/Maps/Map" << mapID << ".txt";
+
+	// Open file
+	std::ifstream mapFile;
+	mapFile.open(oss.str());
+
+	// Create variables for reading through the file
+	std::string line;
+	int mapWidth = 0;
+	int mapHeight = 0;
+	int level[3][200];
+	int currentLayer = 0;
+	int rowCounter = 0;
+
+	// Read through the file
+	while (getline(mapFile, line))
+	{
+		if (!line.compare(0, 5, "BEGIN"))
+		{
+			// Read tilemap-ID and assign texture
+			Textures::ID id = (Textures::ID) std::stoi(line.substr(6, line.length() - 1));
+			getLayer(currentLayer).setTexture(m_texLoader.get(id));
+
+			//std::cout << "Layer #" << currentLayer << ": " << &getLayer(currentLayer) << "\n";
+		}
+		else if (!line.compare(0, 3, "END"))
+		{
+			// Increase layer count
+			++currentLayer;
+			rowCounter = 0;
+		}
+		else if (!line.compare(0, 3, "MAP"))
+		{
+			// Read in map width and height
+			std::istringstream ss(line.substr(4, line.length() - 1));
+			std::string num;
+			int rowCounter = 0;
+			while (getline(ss, num, ','))
+			{
+				if (rowCounter == 0) mapWidth = std::stoi(num);
+				else if (rowCounter == 1) mapHeight = std::stoi(num);
+				++rowCounter;
+			}
+		}
+		else
+		{
+			// Read in tilemap data
+			std::istringstream ss(line);
+			std::string tile;
+			while (getline(ss, tile, ','))
+			{
+				level[currentLayer][rowCounter] = std::stoi(tile);
+				++rowCounter;
+			}
+		}
+	}
+
+	// Close file
+	mapFile.close();
+
+	std::cout << level[1][0];
+
+	// Load map layers
+	m_mapLayerGround.loadMapData(level[0], mapWidth, mapHeight);
+	m_mapLayerMiddle.loadMapData(level[1], mapWidth, mapHeight);
+	m_mapLayerAbove.loadMapData(level[2], mapWidth, mapHeight);
+}
+
+Tilemap& Game::getLayer(int layer)
+{
+	switch (layer)
+	{
+	case 0: return m_mapLayerGround;
+	case 1: return m_mapLayerMiddle;
+	case 2: return m_mapLayerAbove;
 	}
 }
 
